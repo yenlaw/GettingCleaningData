@@ -8,39 +8,37 @@ The R script:
 
 Data Process / Pipeline:
 
-#load test data
+=>load test data
 
-#unzip data
+=>unzip data
 
-#load test data
+=>load test data
 
 #load subject data
 
-#load features data
+=>load features data
 
-#load activity data
+=>load activity data
 
-#(row) combine data
+=>(row) combine data
  
-#add column names
+=>add column names
 
-#(col) combine data
+=>(col) combine data
 
-#filter combined data
-  # header like 'mean' AND like 'std'
+=>filter combined data
+ => header like 'mean' AND like 'std'
   
-#Add Activity Labels
+=>Add Activity Labels
 
  LAYING SITTING STANDING WALKING WALKING_DOWNSTAIRS WALKING_UPSTAIRS
  
-#Acc =>  Accelerometer Gyro => Gyroscope Mag => Magnitude ^t => Time ^f => Frequency BodyBody => Body
-#Use rename (from RCookbook) - less error prone than 'manual' editing many column names
+=>Acc =>  Accelerometer Gyro => Gyroscope Mag => Magnitude ^t => Time ^f => Frequency BodyBody => Body
+=>Use rename (from RCookbook) - less error prone than 'manual' editing many column names
 
-#reshape data where Activity(Activity Lbel) and Subject are the same.
+=>reshape data where Activity(Activity Lbel) and Subject are the same.
 
-#calculate mean for parameter combination and remove NA.
+=>calculate mean for parameter combination and remove NA.
  
-#produce step5 output
- 
-
+=>produce step5 output
 
