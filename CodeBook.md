@@ -14,7 +14,7 @@ Data Process / Pipeline:
 
 =>load test data
 
-#load subject data
+=>load subject data
 
 =>load features data
 
