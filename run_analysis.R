@@ -12,7 +12,7 @@ unzip("allData/Dataset.zip", exdir = "./alldata")
 
 toplevel_data_path <- file.path("./alldata" , "UCI HAR Dataset")
 filelist<-list.files(toplevel_data_path,  recursive=TRUE)
-filelist
+#filelist
 
   #load subject data
 
@@ -31,8 +31,8 @@ dataTestActivity  <- read.table(file.path(toplevel_data_path, "test" , "Y_test.t
 
   #summarise data  
 
-head(dataTrainSubject)
-head(dataTestSubject)
+#head(dataTrainSubject)
+#head(dataTestSubject)
 
   #combine data
   #row bind : row 7352 2947
@@ -80,12 +80,51 @@ requiredlabels<-c(meanstdfeatureLabelsasStr, "Subject", "Activity")
 allDataMeanStd <- subset(allData, select=requiredlabels)
 #head(allDataMeanStd,100)
 
-  #load test data
+  #Add Activity Labels
 
-  #load test data
+featureLabels  <- read.table(file.path(toplevel_data_path, "activity_labels.txt"),  header = FALSE)
+#head(featureLabels$V2,100)
+#head(allDataMeanStd$Activity,100)
+#head(allDataMeanStd$Subject,500)
 
-  #load test data
+allDataMeanStd$ActivityLabel <- featureLabels$V2[allDataMeanStd$Activity]
+#head(allDataMeanStd,200)
 
-  #load test data
+  #rename column labes with more meaningful text.
 
-  #load test data
+#head(allDataMeanStd,1)
+
+  #Acc =>  Accelerometer Gyro => Gyroscope Mag => Magnitude ^t => Time ^f => Frequency BodyBody => Body
+  #Use rename (from RCookbook) - less error prone than 'manual' editing many column names
+
+TheData <- allDataMeanStd
+#head(TheData,1)
+#head(TheData,200)
+
+names(TheData)<-gsub("Acc", "Accelerometer_", names(TheData))
+names(TheData)<-gsub("Gyro", "Gyroscope_", names(TheData))
+names(TheData)<-gsub("Mag", "Magnitude_", names(TheData))
+names(TheData)<-gsub("Body", "Body_", names(TheData))
+names(TheData)<-gsub("BodyBody", "Body_", names(TheData))
+names(TheData)<-gsub("Gravity", "Gravity_", names(TheData))
+names(TheData)<-gsub("^t", "Time_", names(TheData))
+names(TheData)<-gsub("^f", "Frequency_", names(TheData))
+names(TheData)<-gsub("-mean()", "Mean", names(TheData))
+names(TheData)<-gsub("-std()", "Standard", names(TheData))
+
+
+  #creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+#head(TheData,1)
+
+library(plyr);
+library(reshape2);
+
+  #reshape data where Activity(Activity Lbel) and Subject are the same.
+AggregatedData <- melt(TheData,id=c("Activity","ActivityLabel","Subject"))
+head(AggregatedData,1)
+
+MeanAggregatedData <- dcast(AggregatedData, Activity + ActivityLabel + Subject ~ variable, fun.aggregate = mean, na.rm=TRUE)
+#head(MeanAggregatedData,1)
+
+  #produce step5 output
+write.table(MeanAggregatedData, file = "tidyDataSet.txt",row.name=FALSE)
