@@ -1,12 +1,13 @@
-The Web Site where the Data was sourced:
+#The Web Site where the Data was sourced:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
-The data for the project:
+#The data for the project:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-The R script:
+#The R script:
+https://github.com/yenlaw/GettingCleaningData/blob/master/run_analysis.R
 
-Data Process / Pipeline:
+#Data Process / Pipeline:
 
 =>load test data
 
@@ -32,13 +33,14 @@ Data Process / Pipeline:
 =>Add Activity Labels
 
  LAYING SITTING STANDING WALKING WALKING_DOWNSTAIRS WALKING_UPSTAIRS
- 
+
+=> Rename columns
 =>Acc =>  Accelerometer Gyro => Gyroscope Mag => Magnitude ^t => Time ^f => Frequency BodyBody => Body
 =>Use rename (from RCookbook) - less error prone than 'manual' editing many column names
 
-=>reshape data where Activity(Activity Lbel) and Subject are the same.
+=>reshape data where Activity(Activity Lbel) and Subject are the same. (Long Format)
 
-=>calculate mean for parameter combination and remove NA.
+=>calculate mean for parameter combination and remove NA.              (Wide Format)
  
 =>produce step5 output
 
